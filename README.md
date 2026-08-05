@@ -1,3 +1,122 @@
+### Table of Contents
+- [SQL](#SQL)
+    - [Basic Commands](#basic-commands)
+        - [SELECT](#select)
+        - [INSERT INTO](#insert-into)
+        - [UPDATE](#update)
+        - [DELETE FROM](#delete-from)
+    - [Operators](#operators)
+        - [Arithmetic](#arithmetic)
+        - [Bitwise](#bitwise)
+        - [Logical](#logical)
+        - [Comparison](#comparison)
+    - [Grouping](#grouping)
+        - [GROUP BY](#group-by)
+        - [ORDER BY](#order-by)
+    - [Functions](#functions)
+    - [Aggregates](#aggregates)
+    - [Database](#database)
+        - [CREATE DATABASE](#create-database)
+        - [DROP DATABASE](#drop-database)
+        - [CREATE TABLE](#create-table)
+        - [ALTER TABLE](#alter-table)
+        - [DROP TABLE](#drop-table)
+    - [Data Types](#data-types)
+        - [String](#string)
+        - [Numeric](#numeric)
+        - [Datetime](#datetime)
+    - [Constraints](#constraints)
+    - [Joins](#joins)
+    - [Stored Procedures](#stored-procedures)
+        - [CREATE PROCEDURE](#create-procedure)
+        - [EXEC](#exec)
+        - [DROP PROCEDURE](#drop-procedure)
+    - [Views](#views)
+        - [CREATE](#create)
+        - [SELECT](#select-1)
+        - [REPLACE VIEW](#replace-view)
+        - [DROP VIEW](#drop-view)
+- [Python](#python)
+    - [Data Types](#data-types-1)
+    - [Operators](#operators-1)
+        - [Arithmetic](#arithmetic-1)
+        - [Assignment](#assignment)
+        - [Comparison](#comparison-1)
+        - [Logical](#logical-1)
+        - [Bitwise](#bitwise-1)
+    - [String Methods](#string-methods)
+    - [Data Structures](#data-structures)
+        - [List](#list)
+        - [Tuple](#tuple)
+        - [Set](#set)
+        - [Dictionary](#dictionary)
+        - [Range](#range)
+        - [collections.deque](#collectionsdeque)
+        - [Others](#others)
+    - [Control Flow](#control-flow)
+        - [If](#if)
+        - [For](#for)
+        - [While](#while)
+        - [Match](#match)
+    - [Functions](#functions-1)
+    - [Input/Output](#inputoutput)
+    - [Regex](#regex)
+    - [Error-Handling](#error-handling)
+    - [Object-Oriented Programming](#object-oriented-programming)
+    - [Modules](#modules)
+    - [Virtual Environment](#virtual-environment)
+    - [PIP](#pip)
+- [Numpy](#numpy)
+    - [Data Types](#data-types-2)
+    - [numpy.array](#numpyarray)
+        - [Constructors](#constructors)
+        - [Attributes](#attributes)
+        - [Shortcuts](#shortcuts)
+        - [Slicing/Access](#slicingaccess)
+        - [Methods](#methods)
+    - [Static](#static)
+        - [Array Unary](#array-unary)
+        - [Array Binary](#array-binary)
+        - [File](#file)
+    - [numpy.random](#numpyrandom)
+    - [numpy.linalg](#numpylinalg)
+- [Pandas](#pandas)
+    - [Static](#static-1)
+    - [pandas.Series](#pandasseries)
+        - [Constructors](#constructors-1)
+        - [Attributes](#attributes-1)
+        - [Shortcuts](#shortcuts-1)
+        - [Slicing/Access](#slicingaccess-1)
+        - [Methods](#methods-1)
+            - [Arithmetic](#arithmetic-2)
+            - [Descriptive/Statistics](#descriptivestatistics)
+        - [String methods](#string-methods-1)
+    - [pandas.DataFrame](#pandasdataframe)
+        - [Constructors](#constructors-2)
+        - [Attributes](#attributes-2)
+        - [Slicing/Access](#slicingaccess-2)
+        - [Methods](#methods-2)
+            - [Arithmetic](#arithmetic-3)
+            - [Descriptive/Statistics](#descriptivestatistics-1)
+    - [pandas.Index](#pandasindex)
+        - [Attributes](#attributes-3)
+        - [Methods](#methods-3)
+    - [Data Loading](#data-loading)
+        - [import csv](#import-csv)
+        - [import json](#import-json)
+        - [import lxml, beautifulsoup4, html5lib](#import-lxml-beautifulsoup4-html5lib)
+        - [read_csv()](#read_csv)
+        - [read_excel()](#read_excel)
+        - [read_sql()](#read_sql)
+        - [Others](#others-1)
+        - [WEB API](#web-api)
+    - [Data Cleaning](#data-cleaning)
+        - [pandas](#pandas-1)
+        - [Pandas Extension Data Types](#pandas-extension-data-types)
+        - [Series](#series)
+        - [DataFrames](#dataframes)
+            
+
 # SQL
 
 ## Basic Commands
@@ -219,7 +338,7 @@
 ## Operators
 
 ### Arithmetic
-`+`, `-`, `*`, `/`, `//`, `**`, `%
+`+`, `-`, `*`, `/`, `//`, `**`, `%`
 
 ### Assignment
 `=`, `+=`, `...`,
@@ -283,6 +402,7 @@
 			
 ### Tuple
 Immutable list
+
 `x, y, z = (1,1,1)`
 		
 * Methods
@@ -371,18 +491,20 @@ Immutable list
 	* `list(enumerate(['a', 'b'], 5)) == [(5,'a'),(6,'b')]` 
 
 * Enum
+```
+    from enum import Enum
 
-        from enum import Enum
+        class A (Enum):
 
-            class A (Enum):
+            a = val1
 
-                a = val1
-
-                b = val2
+            b = val2
+```
 
 ## Control Flow
 	
 ### If
+```
     if:
 
         do_smth
@@ -394,8 +516,10 @@ Immutable list
     else:
 
         do_smth
+```
 	
 ### For
+```
     for x in list:
 
         do_smth
@@ -403,10 +527,12 @@ Immutable list
     else:
 
         do_smth
-    
-    -> break/continue
+```
+* break
+* continue
 		
 ### While
+```
     while cond:
 
         do_smth
@@ -414,10 +540,12 @@ Immutable list
     else:
 
         do_smth
-    
-    -> break/continue
+```
+* break
+* continue
 		
 ### Match
+```
     match var:
 
         case c1:
@@ -435,6 +563,7 @@ Immutable list
         case _:		
 
             do_smth
+```
 	
 	
 ## Functions
@@ -476,7 +605,7 @@ There cannot be a positional argument after a keyword argument and the same for 
 ## Error-Handling
 
 ## Object-Oriented Programming
-
+```
     class ChildClass(ParentClass, ...):
 
         def __init__(self, ...):
@@ -488,13 +617,11 @@ There cannot be a positional argument after a keyword argument and the same for 
 
         def __private_method(self, ...):
             do_smth
-
-_
- 
+```
+```
     class ChildClass(ParentClass, ...):
-
--
-
+```
+```
     from dataclasses import dataclass
 
     @dataclass
@@ -502,6 +629,7 @@ _
         name: str
         dept: str
         salary: int
+```
 
 
          
@@ -510,16 +638,17 @@ _
 
 
 ## Virtual Environment
-
+```
     python3 -m venv <project_venv>
     source project_venv/bin/activate
     deactivate
+```
 	
 ## PIP
-
+```
     python -m pip install --user <package>
     python -m pip install --update <package>
-
+```
 
 
 # NUMPY
@@ -844,7 +973,7 @@ The following methods are accessed by `ser.str.`*`method()`*
 * `take(arr, [axis=])`
 * `sample(n=,[replace=])`
 
-#### Arithmetics
+#### Arithmetic
 * `add(df[, fill_value, axis])`
 * `sub()`
 * `div()`
