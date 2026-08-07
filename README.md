@@ -72,7 +72,7 @@
         - [Constructors](#constructors)
         - [Attributes](#attributes)
         - [Shortcuts](#shortcuts)
-        - [Slicing/Access](#slicingaccess)
+        - [Indexing](#indexing)
         - [Methods](#methods)
     - [Static](#static)
         - [Array Unary](#array-unary)
@@ -86,15 +86,15 @@
         - [Constructors](#constructors-1)
         - [Attributes](#attributes-1)
         - [Shortcuts](#shortcuts-1)
-        - [Slicing/Access](#slicingaccess-1)
+        - [Indexing](#indexing-1)
         - [Methods](#methods-1)
             - [Arithmetic](#arithmetic-2)
             - [Descriptive/Statistics](#descriptivestatistics)
-        - [String methods](#string-methods-1)
+            - [String methods](#string-methods-1)
     - [pandas.DataFrame](#pandasdataframe)
         - [Constructors](#constructors-2)
         - [Attributes](#attributes-2)
-        - [Slicing/Access](#slicingaccess-2)
+        - [Indexing](#indexing-2)
         - [Methods](#methods-2)
             - [Arithmetic](#arithmetic-3)
             - [Descriptive/Statistics](#descriptivestatistics-1)
@@ -111,10 +111,7 @@
         - [Others](#others-1)
         - [WEB API](#web-api)
     - [Data Cleaning](#data-cleaning)
-        - [pandas](#pandas-1)
         - [Pandas Extension Data Types](#pandas-extension-data-types)
-        - [Series](#series)
-        - [DataFrames](#dataframes)
             
 
 # SQL
@@ -700,7 +697,7 @@ There cannot be a positional argument after a keyword argument and the same for 
 * `bool_arr` | `bool_arr2`
 * `bool_arr` & `bool_arr2`
 
-### Slicing/Access
+### Indexing
 * `arr[n:m]`
 * `arr[n:m] = val`
 * `arr[n:m] = array`
@@ -809,11 +806,22 @@ The following unary functions do the operation over an axis, or the whole array:
 
 
 ## Static
-* `na`
-* `nan`
+* `NA`
 * `isna()`
-* `isnan()`
-* `value_counts()`
+* `notna()`
+* `isnull()`
+* `notnull()`
+* `unique()`
+* `concat(objs_arr[, join])`
+    * `join`: `inner`, `outer`
+* `merge(left, right, how=)`
+    * `how`: `'left’`, `‘right’`, `‘outer’`, `‘inner’`, `‘cross’`
+* `cut(data, bins[,right=, labels=, precision=])`
+	* `codes`
+    * `categories`
+* `qcut(data, quartiles)`
+* `get_dummies(df[, prefix=])` 
+    * `str.get_dummies('<sep>')`
 
 
 ## pandas.Series
@@ -823,12 +831,16 @@ The following unary functions do the operation over an axis, or the whole array:
 * `Series(dict[, index])`
 
 ### Attributes
-* `name`
+* `size`
 * `dtype`
-* `array`
 * `index`
-* `loc`
-* `iloc`
+* `array`
+* `values`
+* `empty`
+* `name`
+* `is_unique`
+* `is_monotonic_increasing`
+* `is_monotonic_decreasing`
 
 ### Shortcuts
 * `ser` * `int`
@@ -842,43 +854,103 @@ The following unary functions do the operation over an axis, or the whole array:
 * `bool_ser` | `bool_ser2`
 * `bool_ser` & `bool_ser2`
 
-### Slicing/Access
+### Indexing
+* `ser[key]`
 * `ser[bool_arr]`
-* `ser.loc[["id1", ...]]`
-* `ser.loc["id1":"id2"]` (inclusive)
+* `ser.loc[[key, ...]]`
+* `ser.loc[key:key]` (inclusive)
 * `ser.iloc[[n, m, ...]]`
 * `ser.iloc[n:m]` (exclusive)
+* `ser.at[key]`
+* `ser.iat[n]`
 
 ### Methods
-* `get()`
+* `astype(dtype)`
 * `to_dict()`
-* `isna()`
-* `notna()`
-* `isin()`
+* `to_numpy()`
+* `to_list()`
+* `isin(arr)`
+* `get(key)`
+* `items()`
+* `keys()`
+* `drop(key)`
+* `pop(key)`
+* `nunique()`
+* `unique()`
+* `value_counts()`
+* `duplicated()`
+* `drop_duplicates()`
 * `reindex(indices_list[, method=])`
     * `method`: `'ffill'`, `'bfill'`
-* `drop("id1")`
-* `map(function)`
+* `sort_index([ascending=])`
+* `sort_values([ascending=, na_position=])`
+    * `na_position`: `'first'`, `'last'`
+* `where(bool_arr, val)`
 * `replace()`
     * `([from_val1, ...],[to_val1, ...])`
     * `({from_val: to_val, ... })`
-* `sort_index([ascending])`
-* `sort_values([ascending=, na_position=])`
-    * `na_position`: `'first'`, `'last'`
-* `unique()`
-* `value_counts()`
 * `sample(n=,[replace=])`
+* `apply(func)`
+* `map(func)`
+* `groupby(bool_arr)`
+* `rename()`
 
 #### Arithmetic
 numpy behaves well with pandas.Series
 
-#### Descriptive/Statistics
-* The same of data frames
-* `argmin`, `argmax`
-* `corr(ser2)`
-* `cov(ser2)`
+* `add()` ,`sub()`, `mul()`, `div()`, `floordiv()`, `mod()`, `pow()`
 
-### String methods
+    Each of the methods above has a reversed version (`radd()`, ...).
+
+    Parameters:
+    * Another Series
+    * `fill_value`
+
+* `gt()`, `lt()`, `ge()`, `le()`, `ne()`, `eq()`
+* `dot()`
+
+    Parameters:
+    * Another Series
+    * `fill_value`
+
+
+#### Descriptive/Statistics
+* `any()`, `all()`
+* `abs()`
+* `count()`
+* `describe()`
+* `min()`, `max()`
+    * `cummin()`, `cummax()`
+* `sum()`, `prod()`
+    * `cumsum()`, `cumprod()`
+* `mean()`, `median()`
+* `quantile()`
+* `var()`
+* `std()`: standard deviation
+* `skew()`: skewness
+* `kurt()`: kurtosis
+* `diff()`: first arithmetic difference
+* `pct_change()`: percent change
+* `corr()`, `cov()`
+* `corrwith()`
+
+    Parameters:
+
+    * `skipna`
+
+* `idxmin()`, `idxmax()`
+
+#### Missing Data
+* `notnull()`
+* `isnull()`
+* `notna()`
+* `isna()`
+* `dropna()`
+* `fillna(val)`
+* `bfill()`
+* `ffill()`
+
+#### String methods
 The following methods are accessed by `ser.str.`*`method()`*
 * `cat()`
 * `contains()`
@@ -923,17 +995,23 @@ The following methods are accessed by `ser.str.`*`method()`*
 
 ### Attributes
 * Columns are attributes
-* `columns`
+* `size`
+* `shape`
+* `dtypes`
 * `index`
-* `loc`
-* `iloc`
+* `axes`
+* `columns`
+* `array`
+* `values`
+* `empty`
 * `T`
+* `name`
+* `is_monotonic_increasing`
+* `is_monotonic_decreasing`
 
-### Slicing/Access
+### Indexing
 * `df["col"]`
-* `df.<col>`
 * `df[["col1", ...]]`
-* `df.loc[:, ["col1", ...]]`
 * `df[bool_array]`
 * `df.loc["id1"]`
     * `df.loc["id1":"id2"]`
@@ -948,69 +1026,100 @@ The following methods are accessed by `ser.str.`*`method()`*
 * `df.iat[n_row, n_col]`
 
 ### Methods
-* `head()`
-* `tail()`
+* `astype(dtype)`
 * `to_numpy()`
-* `notna()`
-* `isna()`
-* `isin()`
-* `reindex(index[, columns, axis, fill_value, method, limit, tolerance])`
-    * `methods`: `'ffill'`, `'bfill'`
-* `drop(index[, columns])`
-* `apply(function[, axis])`
-* `applymap(function)`
-* `sort_index([axis, ascending])`
-* `sort_values(['col1', ...])`
-* `rank([axis, ascending, method])`
-    * `methods`: `'average'`, `'min'`, `'max'`, `'first'`, `'dense'`
-* `rename([index=dict, columns=dict])`
-* `del df[col]`
-* `any([axis=])`: boolean
-* `all([axis=])`: boolean
+* `head(n)`
+* `tail(n)`
+* `isin(arr)`
+* `get(col)`
+* `items()`
+* `keys()`
+* `insert(idx,col,val)`
+* `drop(index=idxs[, columns=cols])`
+* `pop(col)`
 * `nunique()`
 * `value_counts()`: takes tuples as elements
-* `df.apply(np.value_counts)`: takes the elements of each column
+* `duplicated([keep=])`
+* `drop_duplicates([subset=, keep=])`
+	* `subset`: list of considered columns
+	* `keep`: `"last"`
+* `reindex(index[, columns, axis, fill_value, method, limit, tolerance])`
+    * `methods`: `'ffill'`, `'bfill'`
+* `sort_index([axis, ascending])`
+* `sort_values(['col1', ...])`
+* `where(bool_arr, val)`
+* `replace()`
+    * `([from_val1, ...],[to_val1, ...])`
+    * `({from_val: to_val, ... })`
+* `rank([axis, ascending, method])`
+    * `methods`: `'average'`, `'min'`, `'max'`, `'first'`, `'dense'`
 * `take(arr, [axis=])`
 * `sample(n=,[replace=])`
+* `apply(func[, axis])`
+* `applymap(func)`
+* `df.apply(np.value_counts)`: takes the elements of each column
+* `groupby(bool_arr)`
+* `rename([index=dict, columns=dict])`
 
 #### Arithmetic
-* `add(df[, fill_value, axis])`
-* `sub()`
-* `div()`
-* `floordiv()`
-* `mul()`
-* `pow()`
-* Each of these functions has a reversed function radd, rsub, ...
+* `add()`, `sub()`, `mul()`, `div()`, `floordiv()`, `mod()`, `pow()`
+    
+    Each of these functions has a reversed function (`radd()`, ...).
+
+    Parameters:
     * Another dataframe or series
     * `fill_value`
     * `axis` if a series is to be operated, it must match the axis (indexes or columns) [broadcasting]
 
+* `gt()`, `lt()`, `ge()`, `le()`, `ne()`, `eq()`
+* `dot()`
+
+    Parameters:
+    * Another Series
+    * `fill_value`
+
 #### Descriptive/Statistics
+* `any()`, `all()`
+* `abs()`
 * `count()`
 * `describe()`
 * `min()`, `max()`
-* `idxmin()`, `idxmax()`
+    * `cummin()`, `cummax()`
+* `sum()`, `prod()`
+    * `cumsum()`, `cumprod()`
+* `mean()`, `median()`
 * `quantile()`
-* `sum()`
-* `mean()`
-* `median()`
-* `mad()`: mean absolute deviation
-* `prod()`
 * `var()`
 * `std()`: standard deviation
 * `skew()`: skewness
 * `kurt()`: kurtosis
-* `cumsum()`
-* `cummin()`, `cummax()`
-* `cumprod()`
 * `diff()`: first arithmetic difference
 * `pct_change()`: percent change
-* `corr()`
-* `cov()`
+* `corr()`, `cov()`
 * `corrwith()`
+
+    Parameters:
+    * Another DataFrame
     * `axis`
     * `skipna`
     * `level`
+
+* `idxmin()`, `idxmax()`
+
+#### Missing Data
+* `notnull()`
+* `isnull()`
+* `notna()`
+* `isna()`
+* `dropna([axis=, how=,tresh=])`
+	* `how`: `'all'`
+	* `tresh`: number of na values not allowed
+* `fillna(value, [method=, limit=, axis=])`
+	* `value`: constant, dictionary `{'col': val}`
+    * `method`: `'bfill'`, `'ffill'`
+* `bfill()`
+* `ffill()`
+* mapping through columns (Series)
 
 
 ## pandas.Index
@@ -1122,15 +1231,6 @@ The following methods are accessed by `ser.str.`*`method()`*
 
 ## Data Cleaning
 
-### Pandas
-
-* `cut(data, bins[,right=, labels=, precision=])`
-	* `codes`
-    * `categories`
-* `qcut(data, quartiles)`
-* `get_dummies(df[, prefix=])` 
-    * `str.get_dummies('<sep>')`
-
 ### Pandas Extension Data Types
 * `BooleanDType`
 * `CategoricalDtype`
@@ -1139,24 +1239,3 @@ The following methods are accessed by `ser.str.`*`method()`*
 * `Int8Dtype` (`16`, `32`, `64`)
 * `UInt8Dtype` (`16`, `32`, `64`)
 
-### Series
-* `isna()`
-* `notna()`
-* `isnan()`
-* `dropna()`
-* `fillna([method])`
-
-### DataFrames
-* `isna()`
-* `notna()`
-* `isnan()`
-* `dropna([axis=, how=,tresh=])`
-	* `how`: `'all'`
-	* `tresh`: number of na values not allowed
-* `fillna(value, [method=, limit=, axis=])`
-	* `value`: constant, dictionary `{'col': val}`
-* `duplicated([keep=])`
-* `drop_duplicates([subset=, keep=])`
-	* `subset`: list of considered columns
-	* `keep`: `"last"`
-* mapping through columns (Series)
